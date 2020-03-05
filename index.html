@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #2A2B30;">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cake+cake+cake</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <style>
+        /* Product grid */
+
+grid,
+sizer,
+item,
+slider,
+slide,
+info,
+brand,
+title,
+price,
+text-hidden,
+bar,
+/*filter,
+label,
+icon,*/
+coint {
+    display: block;
+}
+
+label {
+    display: inline-block;
+}
+
+grid {
+    position: relative;
+    overflow: hidden;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 1.5em 0 8em;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+/* Loader */
+[loader] {
+    display: none;
+    margin: 3em auto 0;
+}
+
+[loading] [loader] {
+    display: block;
+}
+
+/* Clearfix */
+
+grid:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+
+/* Grid items */
+
+sizer,
+item {
+    position: relative;
+    float: left;
+    width: 20%;
+    padding: .75em;
+}
+
+.no-touch sizer,
+.no-touch item {
+    padding: .75em .75em 1.25em;
+}
+
+[loading] item {
+    visibility: hidden;
+}
+
+[size-a] {
+    width: 40%;
+}
+
+[size-b] {
+    width: 60%
+}
+
+/* Gallery */
+
+slider {
+    /* padding: 0;
+    border-radius: 5px;
+    background: #24252a;
+    overflow: hidden;*/
+
+    padding: 0;
+    border-radius: 5px;
+    background: #24252a;
+    overflow: hidden;
+    /*padding-top: 100%;*/
+    width: 100%;
+    font-size: 0;
+    line-height: 0;
+    /* height: 0;*/
+    /*display: flex;*/
+}
+
+.no-touch slider {
+    /*padding: 0 0 1.25em;*/
+}
+
+slide {
+    width: 100%;
+    /*padding: 1em;*/
+}
+
+slide img {
+    width: 100%;
+
+}
+        
+        
+slide {
+    width: 100%;
+    height: 0;
+    padding-bottom: 150%; /* You define this doing image height / width * 100% */
+    position: relative;
+}
+        
+slide img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+}    
+        
+        
+
+/* Flickity page dots */
+
+slider .flickity-page-dots {
+    bottom: 20px;
+    opacity: 0;
+    -webkit-transition: opacity .3s;
+    transition: opacity .3s;
+}
+
+.no-touch slider:hover .flickity-page-dots {
+    opacity: 1;
+}
+
+slider .flickity-page-dots .dot {
+    background: #131417;
+}
+
+/* Productinfo */
+
+info {
+    position: relative;
+    margin: 10px 0 0;
+    padding: 0 60px 0 0;
+    text-align: left;
+}
+
+brand {
+    font-size: .85em;
+    font-weight: bold;
+    display: block;
+    color: #595b64;
+}
+
+title {
+    font-size: .95em;
+    font-weight: bold;
+    margin: 0;
+    padding: .4em 0 .1em;
+}
+
+price {
+    font-size: .95em;
+    font-weight: bold;
+    position: absolute;
+    top: .45em;
+    right: .25em;
+    color: #595b64;
+}
+
+/* Action style */
+
+[action] {
+    font-family: Avenir, 'Helvetica Neue', 'Lato', 'Segoe UI', Helvetica, Arial, sans-serif;
+    font-size: 1.05em;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: .25em;
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    background: none;
+}
+
+[action]:focus {
+    outline: none;
+}
+
+[button] {
+    color:
+        orange;
+    background:
+        #0000002e;
+    border-radius: 5px;
+}
+
+.no-touch [button]:hover {
+    color: #fff;
+    outline: none;
+    background: #292929cc;
+}
+
+text-hidden {
+    position: absolute;
+    top: 200%;
+}
+
+/* Add to cart button */
+
+[buy] {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0.5em 0.5em;
+    -webkit-transition: opacity .3s, -webkit-transform .3s;
+    transition: opacity .3s, transform .3s;
+    -webkit-transform: translate3d(-5px, 0, 0);
+    transform: translate3d(-5px, 0, 0);
+}
+
+.no-touch [buy] {
+    opacity: 0;
+}
+
+.no-touch item:hover [buy] {
+    opacity: 1;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+
+/* Fixed bottombar */
+
+bar {
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.75em 5em;
+    text-align: center;
+    background: #191a1b;
+    -webkit-transform: translate3d(0, 0, 0);
+    /* Fix for Chrome flicker on Mac ...party like we're in 2012! */
+}
+
+.flexbox filter {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+/* Filter */
+
+label {
+    font-size: .85em;
+    display: inline-block;
+    margin: 0 2%;
+    font-weight: bold;
+    color: #393A3F;
+}
+
+[item] {
+    font-weight: bold;
+    margin: 0 2%;
+    padding: .1em;
+    vertical-align: middle;
+    color: #a3a3b3;
+    border-bottom: 2px solid transparent;
+}
+
+[selected] {
+    color:
+        orange;
+    border-color:
+        orange;
+}
+
+[item] icon {
+    font-size: 1.75em;
+    display: none;
+}
+
+/* Shopping cart */
+
+[cart] {
+    font-size: 1.5em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    overflow: hidden;
+    height: 100%;
+    padding: 0 1.195em;
+    cursor: pointer;
+    color:
+        orange;
+    border: none;
+    background-color:
+        #131415;
+}
+
+        order {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: gray;
+            z-index: 1000;
+            /* margin: 0 auto; */
+            /* margin: auto; */
+            top: 25%;
+            left: 25%;
+            border-radius: 5px;
+            display: none;
+            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
+            padding: 11px;
+        }
+
+        order item {
+            background: yellowgreen;
+            margin-bottom: 2px;
+            width: 100%;
+            border-radius: 3px;
+        }
+
+        order item[close] {}
+
+
+        order phone {
+            width: 80%;
+            height: 32px;
+            background: orange;
+        }
+
+        order button {
+            border-radius: 3px;
+            width: 100%;
+            background: orange;
+            height: 48px;
+            border: none;
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        order button note {
+            font-size: 10px;
+            font-weight: 400;
+        }
+    </style>
+
+
+        <link rel="stylesheet" _href='css/normalize.min.css'>
+        <link rel='stylesheet' _href='css/flickity.css'>
+        <link rel='stylesheet' _href='css/fa.css'>
+        <link rel="stylesheet" href='css/style.css'>
+
+
+    
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+
+    <order>
+        <item close id="fp">
+            <button class="fa fa-times"></button>
+        </item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item summary>
+            <note></note>
+        </item>
+        <name>
+            <note>не обязательно</note>
+            <text>
+                Как к Вам обращаться ?:
+            </text>
+        </name>
+        <phone>
+            <note>обязательно, будет выслано СМС с кодом подтверждения(он же пароль)</note>
+            <text>
+                Ваш телефон:
+            </text>
+        </phone>
+
+
+        <button order>
+            <text>Заказать</text>
+            <note>При первом заказе необходима предоплата 33%.</note>
+        </button>
+    </order>
+
+    <bar>
+        <filter>
+
+            <button action item selected data-filter="*:not([shop])">All</button>
+            <button action item data-filter="[jackets]:not([shop])">
+                <icon class="icon--jacket"></icon><text>Jackets</text>
+            </button>
+            <button action item data-filter="[shirts]:not([shop])">
+                <icon class=" icon--shirt"></icon><text>Shirts</text>
+            </button>
+            <button action item data-filter="[dresses]:not([shop])">
+                <icon class="icon icon--dress"></icon><text>Dresses</text>
+            </button>
+            <button action item data-filter="[trousers]:not([shop])">
+                <icon class="icon icon--trousers"></icon><text>Trousers</text>
+            </button>
+            <button action item data-filter="[shoes]:not([shop])">
+                <icon class=" icon--shoe"></icon><text>Shoes</text>
+            </button>
+            <button cart data-filter="[shop]">
+                <icon class=" fa fa-shopping-cart"></icon>
+                <text-hidden>Shopping cart</text-hidden>
+                <count>0</count>
+            </button>
+        </filter>
+
+    </bar>
+
+    <view>
+
+        <header class="bp-header cf">
+
+            <span id="fp"> <span class="bp-icon bp-icon-about" data-content="The Blueprints are a collection of basic and minimal website concepts, components, plugins and layouts with minimal style for easy adaption and usage, or simply for inspiration."></span></span>
+            <h1>Cake + Likes + You<span>You Likes Cake </span></h1>
+
+            <nav>
+                <a href="#" class="bp-icon bp-icon-prev" data-info="previous Blueprint"><span>Previous Blueprint</span></a>
+
+                <a href="#" class="bp-icon bp-icon-drop" data-info="back to the Codrops article"><span>back to the Codrops article</span></a>
+                <a href="#" class="bp-icon bp-icon-archive" data-info="Blueprints archive"><span>Go to the archive</span></a>
+            </nav>
+
+        </header>
+
+
+        <grid >
+
+
+            <img class="lazy" loader src="images/grid.svg" width="60" alt="Loader image" width="500" height="500" />
+
+            <sizer></sizer>
+
+            <item shirts size-a>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=1" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=3" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes size-a>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=4" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=5" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=6" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item dresses>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=7" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=8" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=9" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shirts>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=10" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=11" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=12" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item trousers>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=13" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=14" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=15" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item jackets>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=16" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=17" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=18" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=19" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=20" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=21" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shirts>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=22" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=23" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=24" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=25" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=26" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=27" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item dresses>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=28" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=29" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=30" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shirts>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=31" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=32" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=33" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item trousers>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=34" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=35" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=36" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item jackets>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=37" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=38" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=39" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=40" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=41" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=42" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item dresses>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item trousers>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item jackets>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shirts>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item dresses>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shirts>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item trousers>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item jackets>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shirts>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item dresses>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shirts>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item trousers>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item jackets>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item dresses>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item trousers>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item shoes>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+            <item jackets>
+                <slider>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                    <slide><img class="lazy" data-src="https://picsum.photos/500?random=2" alt="Dummy" width="500" height="500" /></slide>
+                </slider>
+                <info>
+                    <title>Dummy Product</title>
+                    <brand>Dummy Brand</brand>
+                    <price>$99</price>
+                </info>
+                <button action button buy>
+                    <icon-buy class="fa fa-shopping-cart"></icon-buy>
+                    <icon-remove hide class="fa fa-times"></icon-remove>
+                    <text-hidden>Add to cart</text-hidden>
+                </button>
+            </item>
+        </grid>
+
+    </view>
+   
+    <!-- partial -->
+    <script _src='js/isotope.pkgd.js'></script>
+    <script _src='js/flickity.pkgd.js'>
+        /**/
+    </script>
+    <script _src='js/modernizr.min.js'></script>
+    <script _src='js/fp2.min.js'></script>
+    <script _src='js/script.js'>
+        /**/
+    </script>
+    <script _src='js/prefixfree.min.js'>
+        /**/
+    </script>
+</body>
+
+</html>
